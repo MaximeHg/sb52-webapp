@@ -1,0 +1,58 @@
+
+body {
+  padding: 25px;
+}
+
+a {
+  color: #00B7FF;
+}
+#container {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 4%;
+
+}
+
+#philadelphia, #newEngland {
+  width:42%;
+  display: inline-block;
+}
+
+#phiLogo, #neLogo {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#phiLogo > img, #neLogo > img {
+  width:50%;
+  margin: 0 auto;
+}
+
+#versus {
+  width: 10%;
+  text-align: center;
+  display: inline-block;
+  vertical-align:text-bottom;
+  margin-bottom: 12%;
+}
+
+#phiBets, #neBets {
+  text-align: center;
+}
+
+#title, #totalcount {
+  text-align: center;
+}
+
+#disclaimer {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#titles {
+  margin-bottom: 4%;
+}
+
+ul {
+
+}

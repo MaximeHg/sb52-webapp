@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/systematize.css' />
+    <script src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <script>
+
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof web3 !== 'undefined') {
+      // Use Mist/MetaMask's provider
+      web3js = new Web3(web3.ethereumProvider);
+      console.log("using Mist/Metamask!")
+    } else {
+      console.log('No web3? You should consider trying MetaMask! Using your local node.')
+      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+      web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    }
+    const bettingAddress = "0xA4Ec44aFEe34fEffBAE5Ce4218d3c06EbD70455e";
+    const bettingABI = [
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "winningPot",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "better",
+      				"type": "address"
+      			}
+      		],
+      		"name": "getPhiladelphiaBets",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "newEnglandBets",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "better",
+      				"type": "address"
+      			}
+      		],
+      		"name": "hasBet",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [],
+      		"name": "startVoting",
+      		"outputs": [],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "threshold",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "result",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "better",
+      				"type": "address"
+      			}
+      		],
+      		"name": "getNewEnglandBets",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [
+      			{
+      				"name": "team",
+      				"type": "uint256"
+      			}
+      		],
+      		"name": "bet",
+      		"outputs": [],
+      		"payable": true,
+      		"stateMutability": "payable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "better",
+      				"type": "address"
+      			}
+      		],
+      		"name": "hasClaimed",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "withdrawalOpen",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [
+      			{
+      				"name": "loser",
+      				"type": "uint256"
+      			}
+      		],
+      		"name": "getLosersOnePercent",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "",
+      				"type": "address"
+      			}
+      		],
+      		"name": "wins",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [
+      			{
+      				"name": "",
+      				"type": "address"
+      			}
+      		],
+      		"name": "bets",
+      		"outputs": [
+      			{
+      				"name": "philadelphiaBets",
+      				"type": "uint256"
+      			},
+      			{
+      				"name": "newEnglandBets",
+      				"type": "uint256"
+      			},
+      			{
+      				"name": "claimed",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "owner",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "address"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [
+      			{
+      				"name": "team",
+      				"type": "uint256"
+      			}
+      		],
+      		"name": "breakTie",
+      		"outputs": [],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "philadelphiaBets",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "resultConfirmed",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "votingOpen",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "bool"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "ballot",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "address"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [
+      			{
+      				"name": "donation",
+      				"type": "uint256"
+      			}
+      		],
+      		"name": "getWinnings",
+      		"outputs": [],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "betters",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "totalBets",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"constant": false,
+      		"inputs": [],
+      		"name": "endVoting",
+      		"outputs": [],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "function"
+      	},
+      	{
+      		"constant": true,
+      		"inputs": [],
+      		"name": "GAME_START_TIME",
+      		"outputs": [
+      			{
+      				"name": "",
+      				"type": "uint256"
+      			}
+      		],
+      		"payable": false,
+      		"stateMutability": "view",
+      		"type": "function"
+      	},
+      	{
+      		"inputs": [],
+      		"payable": false,
+      		"stateMutability": "nonpayable",
+      		"type": "constructor"
+      	},
+      	{
+      		"payable": true,
+      		"stateMutability": "payable",
+      		"type": "fallback"
+      	}
+      ]
+    const bettingContract = web3.eth.contract(bettingABI).at(bettingAddress);
+    let address = "0x59Ff339ceFEd79be86C21Eb21157B0f513dE0D4A";
+
+    web3.version.getNetwork((err, netId) => {
+      if(netId == 1) {
+        console.log("Main network, we good to go!");
+        address = web3.eth.accounts[0];
+        bettingContract.getPhiladelphiaBets.call(address, function(err, result) {
+          console.log(result);
+          $("#userPhi").html(web3.fromWei(result.toString()));
+        });
+        bettingContract.getNewEnglandBets.call(address, function(err, result) {
+          console.log(result);
+          $("#userNe").html(web3.fromWei(result.toString()));
+        });
+      } else alert("Please switch your provider Mist/Metamask to the main network!");
+    })
+
+    bettingContract.philadelphiaBets.call(function(err, result) {
+      console.log(result);
+      $("#phiVotes").html(web3.fromWei(result.toString()));
+    });
+    bettingContract.newEnglandBets.call(function(err, result) {
+      console.log(result);
+      $("#neVotes").html(web3.fromWei(result.toString()));
+    });
+
+
+    bettingContract.totalBets.call(function(err, result) {
+      console.log(result);
+      $("#pot").html(web3.fromWei(result.toString()));
+    });
+
+    // Set the date we're counting down to
+    var countDownDate = new Date(1517787000000).getTime();
+		console.log(countDownDate);
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now an the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element with id="demo"
+      document.getElementById("countdown").innerHTML = days + " day " + hours + " hours "
+      + minutes + " minutes " + seconds + " seconds ";
+
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+      }
+    }, 1000);
+
+    function betPHI() {
+      bettingContract.bet(1, {value: web3.toWei($("#phiBet").val())}, function(err, result) {
+        if(err) $("#betting_result").html("Your bet has been cancelled. Did you submit the transaction?")
+        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your betting transaction on etherscan!</a>");
+        console.log(result);
+      });
+    }
+
+    function betNE() {
+      bettingContract.bet.sendTransaction(2, {value: web3.toWei($("#neBet").val())}, function(err, result) {
+        if(err) $("#betting_result").html("Your bet has been cancelled. Did you submit the transaction?")
+        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your betting transaction on etherscan!</a>");
+        console.log(result);
+      });
+
+    }
+
+    </script>
+    <section id="titles">
+      <h1 id="title"> Choose your Superbowl 52 winner!</h1>
+      <h2 id="totalcount"> Total pot : <span id="pot"></span> ETH, ends in <span id="countdown"></span></h2>
+    </section>
+    <div id="container">
+      <div id="philadelphia">
+        <div id="phiLogo">
+          <img src="https://s3.amazonaws.com/freebiesupply/large/2x/philadelphia-eagles-logo-transparent.png">
+        </div>
+        <section id="phiBets">
+          <h2>Philadelphia</h2>
+          <p><strong><span id="phiVotes"></span> ETH</strong></p>
+          <p>You: <span id="userPhi"></span> ETH</p>
+          <p><input type="number" placeholder="0.01 ETH" id="phiBet" min="0"></p>
+          <p><button onclick="betPHI()">Choose Philadelphia</button></p>
+        </section>
+      </div>
+      <div id="versus">
+        <h1>VS.</h1>
+      </div>
+      <div id="newEngland">
+        <div id="neLogo">
+          <img src="https://s3.amazonaws.com/freebiesupply/large/2x/new-england-patriots-logo-transparent.png">
+        </div>
+        <section id="neBets">
+          <h2>New England</h2>
+          <p><strong><span id="neVotes"></span> ETH</strong></p>
+          <p>You: <span id="userNe"></span> ETH</p>
+          <p><input type="number" placeholder="0.01 ETH" id="neBet" min="0"></p>
+          <p><button onclick="betNE()">Choose New England</button></p>
+        </section>
+      </div>
+    </div>
+
+    <p style="text-align:center;" id="betting_result"></p>
+    <section id="disclaimer">
+      <p>Before betting, please acknowledge the following disclaimer:</p>
+      <ul><li>Please bet only if you're allowed to in your country</li>
+          <li>Please check the code on <a target="_blank" href="https://github.com/MaximeHg/sb52-contracts/blob/master/contracts/Superbowl52.sol">Github</a>
+             and <a target="_blank" href="https://etherscan.io/address/0xa4ec44afee34feffbae5ce4218d3c06ebd70455e#code">etherscan</a> before sending your transaction</li>
+          <li>Please understand the process of result reporting as described on <a target="_blank" href="https://github.com/MaximeHg/sb52-contracts/blob/master/README.md">Github</a></li>
+          <li>Please understand that I'm not responsible of any lost funds and that your bet might be lost for eternity</li>
+          <li>Please note that the smart contracts can have bugs that can lead to unexpected behaviors</li>
+          <li>I'm not taking any fees on betting but you can thank me by donating here or when gathering your winnings.</li>
+          <li>Special thanks to moodysalem and its <a target="_blank" href="https://github.com/ethersquares/ethersquares-contracts">ethersquares contracts</a> for the inspiration!</li>
+      </ul>
+    </section>
+  </body>
+</html>

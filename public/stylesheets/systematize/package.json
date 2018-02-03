@@ -1,0 +1,101 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "systematize",
+        "scope": null,
+        "escapedName": "systematize",
+        "name": "systematize",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/mhg/sb52-webapp"
+    ]
+  ],
+  "_from": "systematize@latest",
+  "_id": "systematize@2.0.0",
+  "_inCache": true,
+  "_location": "/systematize",
+  "_nodeVersion": "8.9.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/systematize-2.0.0.tgz_1513107992527_0.19924445473589003"
+  },
+  "_npmUser": {
+    "name": "mvasilkov",
+    "email": "mvasilkov@gmail.com"
+  },
+  "_npmVersion": "5.5.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "systematize",
+    "scope": null,
+    "escapedName": "systematize",
+    "name": "systematize",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/systematize/-/systematize-2.0.0.tgz",
+  "_shasum": "86d0f50b33582791b137d8e5af51dbe7e2327e58",
+  "_shrinkwrap": null,
+  "_spec": "systematize",
+  "_where": "/Users/mhg/sb52-webapp",
+  "bugs": {
+    "url": "https://github.com/mvasilkov/systematize/issues"
+  },
+  "dependencies": {},
+  "description": "systematize.scss: normalize styles across browsers. Like normalize.css, but with system fonts.",
+  "devDependencies": {
+    "clean-css-cli": "^4.1.10",
+    "node-sass": "^4.5.3"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-zeX61y+WzeWvXichDTNVKulPDzS/CsJ9nwlAv5+Fm3H2sthyc8PSj8gQW8ae2dB8wT15KbJKElEiUnLbZJ+/9w==",
+    "shasum": "86d0f50b33582791b137d8e5af51dbe7e2327e58",
+    "tarball": "https://registry.npmjs.org/systematize/-/systematize-2.0.0.tgz"
+  },
+  "files": [
+    "*.scss",
+    "*.css"
+  ],
+  "gitHead": "b31d85f5d41d94fb8c44439a440d7afff731de56",
+  "homepage": "https://github.com/mvasilkov/systematize",
+  "keywords": [
+    "css",
+    "reset",
+    "normalize",
+    "scss",
+    "system fonts",
+    "San Francisco",
+    "SF Mono"
+  ],
+  "license": "MIT",
+  "main": "build/systematize.css",
+  "maintainers": [
+    {
+      "name": "mvasilkov",
+      "email": "mvasilkov@gmail.com"
+    }
+  ],
+  "name": "systematize",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvasilkov/systematize.git"
+  },
+  "scripts": {
+    "build": "npm run css && npm run min.css",
+    "css": "node-sass systematize.scss build/systematize.css",
+    "min.css": "cleancss -o build/systematize.min.css build/systematize.css"
+  },
+  "style": "build/systematize.css",
+  "version": "2.0.0"
+}
