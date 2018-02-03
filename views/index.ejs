@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Choose your Superbowl 52 winner on Ethereum!</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/systematize.css' />
-    <script src="http://code.jquery.com/jquery-3.3.1.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
   </head>
@@ -483,16 +483,16 @@
 
     function betPHI() {
       bettingContract.bet(1, {value: web3.toWei($("#phiBet").val())}, function(err, result) {
-        if(err) $("#betting_result").html("Your bet has been cancelled. Did you submit the transaction?")
-        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your betting transaction on etherscan!</a>");
+        if(err) $("#betting_result").html("Your transaction has been cancelled. Did you submit the transaction?")
+        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your transaction on etherscan!</a>");
         console.log(result);
       });
     }
 
     function betNE() {
       bettingContract.bet.sendTransaction(2, {value: web3.toWei($("#neBet").val())}, function(err, result) {
-        if(err) $("#betting_result").html("Your bet has been cancelled. Did you submit the transaction?")
-        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your betting transaction on etherscan!</a>");
+        if(err) $("#betting_result").html("Your transaction has been cancelled. Did you submit the transaction?")
+        else $("#betting_result").html("<a target='_blank' href='https://etherscan.io/tx/"+result+"'>Check your transaction on etherscan!</a>");
         console.log(result);
       });
 
@@ -506,7 +506,7 @@
     <div id="container">
       <div id="philadelphia">
         <div id="phiLogo">
-          <img src="https://s3.amazonaws.com/freebiesupply/large/2x/philadelphia-eagles-logo-transparent.png">
+          <img src="images/philogo.png">
         </div>
         <section id="phiBets">
           <h2>Philadelphia</h2>
@@ -521,7 +521,7 @@
       </div>
       <div id="newEngland">
         <div id="neLogo">
-          <img src="https://s3.amazonaws.com/freebiesupply/large/2x/new-england-patriots-logo-transparent.png">
+          <img src="images/nelogo.png">
         </div>
         <section id="neBets">
           <h2>New England</h2>
@@ -535,14 +535,14 @@
 
     <p style="text-align:center;" id="betting_result"></p>
     <section id="disclaimer">
-      <p>Before betting, please acknowledge the following disclaimer:</p>
-      <ul><li>Please bet only if you're allowed to in your country</li>
+      <p>Before choosing, please acknowledge the following disclaimer:</p>
+      <ul><li>Please send ether only if you're allowed to in your country</li>
           <li>Please check the code on <a target="_blank" href="https://github.com/MaximeHg/sb52-contracts/blob/master/contracts/Superbowl52.sol">Github</a>
              and <a target="_blank" href="https://etherscan.io/address/0xa4ec44afee34feffbae5ce4218d3c06ebd70455e#code">etherscan</a> before sending your transaction</li>
           <li>Please understand the process of result reporting as described on <a target="_blank" href="https://github.com/MaximeHg/sb52-contracts/blob/master/README.md">Github</a></li>
-          <li>Please understand that I'm not responsible of any lost funds and that your bet might be lost for eternity</li>
-          <li>Please note that the smart contracts can have bugs that can lead to unexpected behaviors</li>
-          <li>I'm not taking any fees on betting but you can thank me by donating here or when gathering your winnings.</li>
+          <li><strong>Please understand that I'm not responsible of any lost funds and that your ether might be lost for eternity</strong></li>
+          <li>Please note that the smart contracts can have <strong>bugs that can lead to unexpected behaviors</strong></li>
+          <li>I'm not taking any fees on transactions but you can thank me by donating <a href="https://etherscan.io/address/0xE7305033fE4D5994Cd88d69740E9DB59F27c7046">here</a> or when gathering your winnings.</li>
           <li>Special thanks to moodysalem and its <a target="_blank" href="https://github.com/ethersquares/ethersquares-contracts">ethersquares contracts</a> for the inspiration!</li>
       </ul>
     </section>
